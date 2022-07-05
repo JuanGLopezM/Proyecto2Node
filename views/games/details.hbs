@@ -1,45 +1,76 @@
 {{#with gameDetails}}
-<h1>More info about {{title}}</h1>
-<img src={{thumbnail}} alt={{title}}>
-<p type="hidden">{{id}}</p>
-<p>Description: {{description}}</p>
-<p>Genre: {{genre}}</p>
-<p>Platform: {{platform}}</p>
-<p>Publisher: {{publisher}}</p>
-<p>Developer: {{developer}}</p>
-<p>Release date: {{release_date}}</p>
-<p>Profile url: {{freetogame_profile_url}}</p>
-
+<div class="card-deck">
+  <div class="card bg-dark text-white mt-3 mb-3">
+    <img class="card-img" src={{thumbnail}} alt="Card image">
+    <div class="card-img-overlay">
+      <h4 class="card-title">{{title}}</h4>
+    </div>
+  </div>
+  <div class="card text-white bg-dark mt-3 mb-3" >
+    <div class="card-body">
+      <p class="card-text">Description: {{description}}</p>
+    </div>
+  </div>
+</div>
 {{/with}}
 
-<h2>Users Feedback</h2>
-{{#each singleComment}}
-<p>Comment: {{comment}}</p>
-<p>User: {{user}}</p>
+<div class="card-deck">
 
-{{!-- <p>Username: {{req.session.user}}</p> --}}
-<form action = "/edit-comment" method="POST">
-        <textarea class="text" name="comment">{{comment}}</textarea>
-        <input type="hidden" name="commentID" value="{{_id}}">
-        {{!-- <input type="hidden" name="apiID" value="{{id}}"> --}}
-        <button type="submit">Edit</button>
-        </form>
+{{#with gameDetails}}
+  <div class="card text-white bg-dark mb-3">
+    <div class="card-body">
+      <p class="card-text"><h4>More Info: </h4><p>
+      <p type="hidden">{{id}}</p>
+      <p class="card-text">{{genre}}</p>
+      <p class="card-text">{{platform}}</p>
+      <p class="card-text">{{publisher}}</p>
+      <p class="card-text">{{developer}}</p>
+      
+      <p class="card-text">{{release_date}}</p>
+      <a href={{freetogame_profile_url}} class="card-link">{{freetogame_profile_url}}</a>
+    
+      {{!-- <p class="card-text"><small class="text-muted">{{freetogame_profile_url}}</small></p> --}}
+    </div>
+  </div>
+{{/with}}
 
-        <form action = "/delete-comment" method="POST">
+<div class="card text-white bg-dark mb-3">
+  <h4 class="card-header">
+    Comments:
+  </h4>
+  {{#each singleComment}}
+  <ul class="list-group list-group-flush text-white bg-dark">
+    <li class="list-group-item text-white bg-secondary  mb-3">User: {{user}}</li>
+    <li class="list-group-item text-white bg-secondary  mb-3">Comment: {{comment}}</li>
+    <li class="list-group-item text-white bg-dark mb-3">
+        
+        <div class="card-group">
+          
+          <div class="card bg-dark">
+            <div class="card-body">
+              <p class="card-text">
+                <form action = "/edit-comment" method="POST">
+                <textarea class="text form-control" name="comment">{{comment}}</textarea>
+              </p>
+            </div>
+          </div>
+
+          <div class="card bg-dark">
+            <div class="card-body">
+              <p class="card-text">
         <input type="hidden" name="commentID" value="{{_id}}">
-        <button type="submit" >Delete</button>
-        </form>
+        <button type="submit" class="btn btn-secondary btn-block">Edit</button>
+        </form><form action = "/delete-comment" method="POST">
+        <input type="hidden" name="commentID" value="{{_id}}">
+        <button type="submit" class="btn btn-secondary btn-block">Delete</button>
+        </form></p>
+            </div>
+          </div>
+
+        </div>
+        
+    </li>
+  </ul>
 {{/each}}
-
-{{!-- <input type="hidden" name="apiID" value="{{gameDetails.id}}">
-       
-        </form> --}}
-{{!-- <form action="/add-comment" method="post">
-<input type="hidden" name="_id" value={{_id}}>
-<div>
-<textarea name="comments" id="comments" style="font-family:sans-serif;font-size:1.2em;">
-Add a comment!
-</textarea>
+  </div>
 </div>
-<input type="submit" value="Submit">
-</form> --}}
